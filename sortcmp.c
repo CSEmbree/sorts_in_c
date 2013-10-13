@@ -25,8 +25,8 @@ int main(int argc, char **argv)
     TestInsertionSort( arraySize ); 
     printf("\n"); //formatting
 
-	//TestQuickSort( arraySize ); 
-    //printf("\n"); //formatting
+	TestQuickSort( arraySize ); 
+    printf("\n"); //formatting
 
 
    return SUCCESS;
@@ -135,7 +135,7 @@ void TestQuickSort(int arraySize)
     t = clock() - t;
     duration = ExecutionTime( t, CLOCKS_PER_SEC );
 
-    printf("\n\tINC DATA TIME: \t%f sec\n", duration);
+    printf("\n\t INC DATA TIME: \t%f sec\n", duration);
 
 
 
@@ -149,14 +149,14 @@ void TestQuickSort(int arraySize)
 
     QuickSort(A, low, high);
 
-    printf("\nData AFTER Sort: ");
     #ifndef DEBUG
+    printf("\nData AFTER Sort: ");
     DisplayList(A, arraySize);
 	#endif
     t = clock() - t;
     duration = ExecutionTime( t, CLOCKS_PER_SEC );
 
-    printf("\n\tRAN DATA TIME: \t%f sec\n", duration);
+    printf("\n\t RAN DATA TIME: \t%f sec\n", duration);
 
 
 
@@ -177,7 +177,7 @@ void TestQuickSort(int arraySize)
     t = clock() - t;
     duration = ExecutionTime( t, CLOCKS_PER_SEC );
 
-    printf("\n\tDEC DATA TIME: \t%f sec\n", duration);
+    printf("\n\t DEC DATA TIME: \t%f sec\n", duration);
 }
 
 void TestInsertionSort(int arraySize)

@@ -1,80 +1,56 @@
 #include "quick.h"
 
- 
-void QuickSort(int numbers[], int left, int right)
+
+void QuickSort(int A[], int left, int right)
 {
-  int pivot, l_hold, r_hold;
- 
-  l_hold = left;
-  r_hold = right;
-  pivot = numbers[left];
-
-  while (left < right)
-  {
-    while ( (numbers[right] >= pivot) && (left < right) )
-      right--;
-    
-    if ( left != right )
+    //If the list >= 2 items
+    if( left < right ) 
     {
-      numbers[left] = numbers[right];
-      left++;
-    }
-    
+        //choose pivotIndex that left <= pivotIndex <= right
+        int pivotIndex = rand()%(right-left + 1) + left;
 
-    while ( (numbers[left] <= pivot) && (left < right) )
-      left++;
-    
-    if ( left != right )
-    {
-      numbers[right] = numbers[left];
-      right--;
+        //Get lists of bigger and smaller items and final position of pivot
+        int pivotNewIndex = Partition(A, left, right, pivotIndex);
+
+        //Recursively sort elements < pivot
+        QuickSort(A, left, pivotNewIndex - 1);
+
+        //Recursively sort elements >= pivot
+        QuickSort(A, pivotNewIndex + 1, right);
     }
-  }
-  
-  numbers[left] = pivot;
-  
-  pivot = left;
-  left = l_hold;
-  right = r_hold;
-  
-  if (left < pivot)
-    QuickSort(numbers, left, pivot-1);
-  
-  if (right > pivot)
-    QuickSort(numbers, pivot+1, right);
 }
 
 
+// A[]   = Array of elements to sort
+// left  = leftmost element index of array
+// right = rightmost element inclusive index of array
+int Partition(int A[], int left, int right, int pivotIndex)
+{
+  int pivotValue = A[pivotIndex];
+
+    Swap(A, pivotIndex, right);  // Move pivot to end
+    
+    int storeIndex = left;
+    
+    for( int i = left; i < right; ++i)  // left ≤ i < right
+    {
+        if(A[i] < pivotValue) 
+        {
+            Swap(A, i, storeIndex);
+            storeIndex++;
+        }
+    }
+
+  Swap(A, storeIndex, right);  // Move pivot to its final place
+
+  return storeIndex;
+}
 
 
-/*
-// left is the index of the leftmost element of the subarray
-  // right is the index of the rightmost element of the subarray (inclusive)
-  // number of elements in subarray = right-left+1
-  Partition(array, left, right, pivotIndex)
-  {
-     pivotValue = array[pivotIndex]
-     swap array[pivotIndex] and array[right]  // Move pivot to end
-     storeIndex = left
-     for i from left to right - 1  // left ≤ i < right
-         if array[i] < pivotValue
-             swap array[i] and array[storeIndex]
-             storeIndex = storeIndex + 1
-     swap array[storeIndex] and array[right]  // Move pivot to its final place
-     return storeIndex
-  }
-
-  QuickSort(array, left, right)
-  {
-     // If the list has 2 or more items
-     if left < right
-         // See "#Choice of pivot" section below for possible choices
-         choose any pivotIndex such that left ≤ pivotIndex ≤ right
-         // Get lists of bigger and smaller items and final position of pivot
-         pivotNewIndex = Partition(array, left, right, pivotIndex)
-         // Recursively sort elements smaller than the pivot
-         quicksort(array, left, pivotNewIndex - 1)
-         // Recursively sort elements at least as big as the pivot
-         quicksort(array, pivotNewIndex + 1, right)
-  }
-*/
+//Swap two values at given indecies
+void Swap(int A[], int iFirst, int iSecond)
+{
+    int temp = A[iSecond];
+    A[iSecond] = A[iFirst];
+    A[iFirst] = temp;
+}
